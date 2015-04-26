@@ -8,7 +8,7 @@ module YandexDirect
 
     def find(id)
       campaign = api.request('GetCampaignParams', { CampaignID: id })
-      raise Yandex::NotFound.new("not found campaign where CampaignID = #{id}") if campaign.empty?
+      raise YandexDirect::NotFound.new("not found campaign where CampaignID = #{id}") if campaign.empty?
       CampaignInfo.new(campaign, api)
     end
 
