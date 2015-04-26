@@ -1,0 +1,7 @@
+Gemfile.lock
+pkg
+yandex_direct.yml
+yandex_translate.yml
+.ruby-version
+spec/yandex_disk.yml
+.idea
