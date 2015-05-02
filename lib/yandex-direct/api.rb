@@ -6,14 +6,14 @@ require 'uri'
 
 module YandexDirect
   class API
-    URL_API = 'https://api.direct.yandex.ru/v4/json/'
-    URL_API_SANDBOX = 'https://api-sandbox.direct.yandex.ru/v4/json/'
+    URL_API = 'https://api.direct.yandex.ru/live/v4/json/'
+    URL_API_SANDBOX = 'https://api-sandbox.direct.yandex.ru/live/v4/json/'
 
     attr_reader :configuration, :banner_info, :campaign_info
 
     def initialize(configuration)
       @configuration = configuration
-      @configuration['sandbox'] ||= false
+      @configuration[:sandbox] ||= false
       @banner_info = BannerInfoWrapper.new(self)
       @campaign_info = CampaignInfoWrapper.new(self)
     end
@@ -28,20 +28,20 @@ module YandexDirect
 
     def request(method, params = {})
       body = {
-        locale: configuration['locale'],
-        token: configuration['token'],
+        locale: configuration[:locale],
+        token: configuration[:token],
         method: method
       }
 
       if body[:method] == 'GetCampaignsList'
-        body.merge!(param: [configuration['login']])
+        body.merge!(param: [configuration[:login]])
       else
         body.merge!(param: params)
       end
 
-      url = URI((configuration['sandbox'] ?  URL_API_SANDBOX : URL_API))
+      url = URI((configuration[:sandbox] ?  URL_API_SANDBOX : URL_API))
 
-      if configuration['verbose']
+      if configuration[:verbose]
         puts "\t\033[32mYandex.Direct:\033[0m #{method}(#{body[:param]})"
       end
 
